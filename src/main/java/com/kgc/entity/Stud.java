@@ -3,7 +3,7 @@ import java.io.Serializable;
 
 /**  
  * 对应表 tbl_stud
- *   
+ *
  * @author lgs  
  *  
  */ 
@@ -15,7 +15,8 @@ public class Stud implements Serializable{
          对应表中id
          
    */  
-   
+
+
    
    private Integer id;
     /*
