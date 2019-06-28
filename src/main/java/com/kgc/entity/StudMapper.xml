@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kgc.dao.StudMapper">
+
+	<resultMap id="BaseResultMap" type="com.kgc.entity.Stud">
+	          <id column="id" jdbcType="INTEGER"  property="id"  />
+              <result property="name" jdbcType="VARCHAR"  column="name" />  
+              <result property="age" jdbcType="INTEGER"  column="age" />  
+              <result property="address" jdbcType="VARCHAR"  column="address" />  
+              <result property="cid" jdbcType="INTEGER"  column="cid" />  
+              <result property="pic" jdbcType="VARCHAR"  column="pic" />  
+	</resultMap>
+
+	<sql id="Base_Column_List">
+	            id,      name,      age,      address,      cid,      pic         
+	</sql>
+
+	<sql id="Alias_Column_List">
+		     t.id,    t.name,    t.age,    t.address,    t.cid,    t.pic   
+	</sql>
+
+	<sql id="Base_Condition">
+		<where>
+		t.is_deleted = 0 
+            <if test="name != null"> 
+                 and t.name = #{name,jdbcType=VARCHAR}  
+            </if>
+            <if test="age != null"> 
+                 and t.age = #{age,jdbcType=INTEGER}  
+            </if>
+            <if test="address != null"> 
+                 and t.address = #{address,jdbcType=VARCHAR}  
+            </if>
+            <if test="cid != null"> 
+                 and t.cid = #{cid,jdbcType=INTEGER}  
+            </if>
+            <if test="pic != null"> 
+                 and t.pic = #{pic,jdbcType=VARCHAR}  
+            </if>
+		   <!-- 自定义条件-->
+		</where>
+	</sql>
+
+	<!-- 根据条件查询-->
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+		<include refid="Alias_Column_List" />
+		from tbl_stud t
+		<include refid="Base_Condition" />
+	</select>
+
+	<!-- 查询总数-->
+	<select id="count" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+		select count(0)
+		from tbl_stud t
+		<include refid="Base_Condition" />
+	</select>
+
+	<!-- 根据主键查询-->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_stud
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update tbl_stud set is_deleted = 1
+		where id = #{id,jdbcType=INTEGER} and is_deleted = 0
+	</update>
+		
+	
+	
+	
+	<!-- 插入所有字段 -->
+	<insert id="insert" parameterType="com.kgc.entity.Stud">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+
+		insert into tbl_stud(
+			<include refid="Base_Column_List" />
+		)
+
+		values(  
+                #{id,jdbcType=INTEGER}, 
+              
+                #{name,jdbcType=VARCHAR}, 
+              
+                #{age,jdbcType=INTEGER}, 
+              
+                #{address,jdbcType=VARCHAR}, 
+              
+                #{cid,jdbcType=INTEGER}, 
+              
+                #{pic,jdbcType=VARCHAR} 
+            )
+	</insert>
+
+	<!-- 插入部分字段 -->
+	<insert id="insertSelective" parameterType="com.kgc.entity.Stud">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+
+		insert into tbl_stud
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		
+            <if test="id != null ">  
+                 id,
+            </if>  
+            <if test="name != null ">  
+                 name,
+            </if>  
+            <if test="age != null ">  
+                 age,
+            </if>  
+            <if test="address != null ">  
+                 address,
+            </if>  
+            <if test="cid != null ">  
+                 cid,
+            </if>  
+            <if test="pic != null ">  
+                 pic,
+            </if>  
+			
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		
+            <if test="id != null">  
+                  #{id,jdbcType=INTEGER}  ,
+            </if>  
+            <if test="name != null">  
+                  #{name,jdbcType=VARCHAR}  ,
+            </if>  
+            <if test="age != null">  
+                  #{age,jdbcType=INTEGER}  ,
+            </if>  
+            <if test="address != null">  
+                  #{address,jdbcType=VARCHAR}  ,
+            </if>  
+            <if test="cid != null">  
+                  #{cid,jdbcType=INTEGER}  ,
+            </if>  
+            <if test="pic != null">  
+                  #{pic,jdbcType=VARCHAR}  ,
+            </if>  
+			
+		</trim>
+	</insert>
+
+	<!-- 更新部分字段-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.kgc.entity.Stud">
+		update tbl_stud
+		<set>
+		       
+            <if test="name != null ">  
+                  name = #{name,jdbcType=VARCHAR},  
+            </if>  
+   
+            <if test="age != null ">  
+                  age = #{age,jdbcType=INTEGER},  
+            </if>  
+   
+            <if test="address != null ">  
+                  address = #{address,jdbcType=VARCHAR},  
+            </if>  
+   
+            <if test="cid != null ">  
+                  cid = #{cid,jdbcType=INTEGER},  
+            </if>  
+   
+            <if test="pic != null ">  
+                  pic = #{pic,jdbcType=VARCHAR},  
+            </if>  
+		</set>
+		
+		where id = #{id,jdbcType=INT}
+	</update>
+
+	<!-- 更新所有字段 -->
+	<update id="updateByPrimaryKey" parameterType="com.kgc.entity.Stud">
+		update tbl_stud
+		set
+		
+                name = #{name,jdbcType=VARCHAR}  ,
+                age = #{age,jdbcType=INTEGER}  ,
+                address = #{address,jdbcType=VARCHAR}  ,
+                cid = #{cid,jdbcType=INTEGER}  ,
+                pic = #{pic,jdbcType=VARCHAR}  
+			
+		where id = #{id,jdbcType=INT}
+	</update>
+
+	<!-- 批量插入 -->
+	<insert id="batchInsert" parameterType="java.util.List">
+		insert into tbl_stud(
+			<include refid="Base_Column_List" />
+		)
+		values
+		<foreach collection="list" index="index" item="item" separator=",">
+		(
+			#{item.id}
+            <choose><when test="name != null">,#{item.name}</when><otherwise>,default</otherwise></choose>
+            <choose><when test="age != null">,#{item.age}</when><otherwise>,default</otherwise></choose>
+            <choose><when test="address != null">,#{item.address}</when><otherwise>,default</otherwise></choose>
+            <choose><when test="cid != null">,#{item.cid}</when><otherwise>,default</otherwise></choose>
+            <choose><when test="pic != null">,#{item.pic}</when><otherwise>,default</otherwise></choose>
+		)
+		</foreach>
+	</insert>
+
+	<!-- 批量插入或更新 -->
+	<update id="batchInsertOrUpdate" parameterType="java.util.List">
+		insert into tbl_stud(
+			<include refid="Base_Column_List" />
+		)
+		values
+		<foreach collection="list" index="index" item="item" separator=",">
+		(
+			#{item.id}
+			  <choose><when test="name != null">,#{item.name}</when><otherwise>,default</otherwise></choose>
+			  <choose><when test="age != null">,#{item.age}</when><otherwise>,default</otherwise></choose>
+			  <choose><when test="address != null">,#{item.address}</when><otherwise>,default</otherwise></choose>
+			  <choose><when test="cid != null">,#{item.cid}</when><otherwise>,default</otherwise></choose>
+			  <choose><when test="pic != null">,#{item.pic}</when><otherwise>,default</otherwise></choose>
+		)
+		</foreach>
+		on duplicate key update 
+		   name=values(name), 
+		   age=values(age), 
+		   address=values(address), 
+		   cid=values(cid), 
+		   pic=values(pic) 
+	</update>
+
+	
+		<!-- 批量删除 -->
+	<update id="batchDelete" parameterType="java.util.List">
+		update tbl_stud set is_deleted = 1 where id in 
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and is_deleted = 0
+	</update>
+	
+	
+	
+	<!-- 自定义查询 -->
+</mapper>
