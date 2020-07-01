@@ -32,7 +32,7 @@
     <mybatis-spring.version>1.2.3</mybatis-spring.version>
     <mybatis.pagehelper.version>5.0.1</mybatis.pagehelper.version>
     <jsqlparser.version>0.9.7</jsqlparser.version>
-    <mySql-driver.version>6.0.6</mySql-driver.version>
+    <mySql-driver.version>8.0.16</mySql-driver.version>
     <oracle-driver.version>12.2.0.1</oracle-driver.version>
     <c3p0.version>0.9.5.2</c3p0.version>
     <jackson.version>2.8.8</jackson.version>
@@ -61,7 +61,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.45</version>
+      <version>8.0.16</version>
     </dependency>
 
     <dependency>
