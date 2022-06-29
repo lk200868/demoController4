@@ -45,7 +45,7 @@
     <taglibs-standard-impl.version>1.2.5</taglibs-standard-impl.version>
     <axis2.version>1.7.5</axis2.version>
     <poi.version>3.16</poi.version>
-    <commons-mail.version>1.4</commons-mail.version>
+    <commons-mail.version>1.5</commons-mail.version>
     <mail.version>1.4.7</mail.version>
     <javax.mail-api.version>1.5.6</javax.mail-api.version>
   </properties>
